@@ -1,7 +1,8 @@
 import React from 'react';
 import MainHeader from './MainHeader';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { Link } from 'react-router-dom';
 import './MainNavigation.css';
+import NavLinks from './NavLinks';
 
 function MainNavigation() {
   return (
@@ -14,7 +15,9 @@ function MainNavigation() {
       <h1 className="main-navigation__title">
         <Link>PlaceBook</Link>
       </h1>
-      <nav>...</nav>
+      <nav>
+        <NavLinks />
+      </nav>
     </MainHeader>
   );
 }
