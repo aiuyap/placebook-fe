@@ -1,9 +1,16 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import Users from './user/pages/Users';
 
 function App() {
   return (
     <>
-      <h1>Hello World!</h1>
+      <Router>
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Redirect to="/" />
+      </Router>
     </>
   );
 }
