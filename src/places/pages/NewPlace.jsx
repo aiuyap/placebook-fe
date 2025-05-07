@@ -10,6 +10,7 @@ import Button from '../../shared/components/FormElements/Button';
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'INPUT_CHANGE':
+      // eslint-disable-next-line no-case-declarations
       let formIsValid = true;
       for (const inputId in state.inputs) {
         if (inputId === action.inputId) {
@@ -55,8 +56,13 @@ function NewPlace() {
     });
   }, []);
 
+  const placeSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs); //send this to backend
+  };
+
   return (
-    <form className="place-form">
+    <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
         id="title"
         type="text"
@@ -74,7 +80,14 @@ function NewPlace() {
         errorText="Please enter a valid description (at least 5 characters)."
         onInput={inputHandler}
       />
-      {console.log(formState.isValid)}
+      <Input
+        id="address"
+        label="Address"
+        element="input"
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText="Please enter an Address."
+        onInput={inputHandler}
+      />
       <Button type="submit" disabled={!formState.isValid}>
         Add Place
       </Button>
