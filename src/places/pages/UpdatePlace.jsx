@@ -8,6 +8,7 @@ import {
   VALIDATOR_MINLENGTH,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+import Card from '../../shared/components/UIElements/Card';
 
 const DUMMY_PLACES = [
   {
@@ -25,7 +26,7 @@ const DUMMY_PLACES = [
   },
   {
     id: 'p2',
-    title: 'Empire State Building',
+    title: 'Empirsdsdsdng',
     description: 'One of the most famous sky scrapers in the world',
     imageUrl:
       'https://images.pexels.com/photos/2404949/pexels-photo-2404949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -44,29 +45,31 @@ function UpdatePlace() {
 
   const [formState, inputHandler, setFormData] = useForm({
     title: {
-      value: identifiedPlace.title,
-      isValid: true,
+      value: '',
+      isValid: false,
     },
     description: {
-      value: identifiedPlace.description,
-      isValid: true,
+      value: '',
+      isValid: false,
     },
   });
 
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: identifiedPlace.title,
-          isValid: true,
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: {
+            value: identifiedPlace.title,
+            isValid: true,
+          },
+          description: {
+            value: identifiedPlace.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: identifiedPlace.description,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
   }, [setFormData, identifiedPlace]);
 
   const placeUpdateSubmitHandler = (e) => {
@@ -74,10 +77,14 @@ function UpdatePlace() {
     console.log(formState.inputs);
   };
 
+  console.log(identifiedPlace);
+
   if (!identifiedPlace) {
     return (
       <div className="center">
-        <h2>Could not find place!</h2>
+        <Card className="padding">
+          <h2>Could not find place!</h2>
+        </Card>
       </div>
     );
   }
