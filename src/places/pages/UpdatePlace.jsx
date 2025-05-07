@@ -1,4 +1,5 @@
 import React from 'react';
+import './PlaceForm.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -48,7 +49,7 @@ function UpdatePlace() {
     );
   }
   return (
-    <form>
+    <form className="place-form">
       <Input
         id="title"
         element="input"
