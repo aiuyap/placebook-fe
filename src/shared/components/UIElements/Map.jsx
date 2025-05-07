@@ -19,6 +19,28 @@ function Map(props) {
         zoom: zoom,
       }),
     });
+
+    const markerStyle = new window.ol.style.Style({
+      image: new window.ol.style.Icon({
+        anchor: [0.5, 1],
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+      }),
+    });
+
+    const marker = new window.ol.Feature({
+      geometry: new window.ol.geom.Point(
+        window.ol.proj.fromLonLat([center.lng, center.lat])
+      ),
+    });
+    marker.setStyle(markerStyle);
+
+    const vectorLayer = new window.ol.layer.Vector({
+      source: new window.ol.source.Vector({
+        features: [marker],
+      }),
+    });
+
+    map.addLayer(vectorLayer);
     return () => {
       map.setTarget(null);
     };
