@@ -10,10 +10,14 @@ import Card from '../../shared/components/UIElements/Card';
 import './Auth.css';
 import Button from '../../shared/components/FormElements/Button';
 import { AuthContext } from '../../shared/context/auth-context';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 function Auth() {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -35,6 +39,7 @@ function Auth() {
       console.log(isLoginMode);
     } else {
       try {
+        setIsLoading(true);
         const response = await fetch('http://localhost:5000/api/users/signup', {
           method: 'POST',
           headers: {
@@ -48,11 +53,14 @@ function Auth() {
         });
         const responseData = await response.json();
         console.log(responseData);
-      } catch (error) {
-        console.log(error);
+        setIsLoading(false);
+        auth.login();
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+        setError(err.message);
       }
     }
-    auth.login();
   };
 
   const switchModeHandler = () => {
@@ -82,6 +90,7 @@ function Auth() {
 
   return (
     <Card className="padding authentication">
+      {isLoading && <LoadingSpinner asOverlay />}
       <h2>Login Required</h2>
       <hr />
       <form onSubmit={authSubmitHandler}>
