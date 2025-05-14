@@ -1,41 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PlaceList from '../components/PlaceList';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-
-const DUMMY_PLACES = [
-  {
-    id: 'p1',
-    title: 'Empire State Building',
-    description: 'One of the most famous sky scrapers in the world',
-    imageUrl:
-      'https://assets.simpleviewinc.com/simpleview/image/upload/crm/newyorkstate/GettyImages-486334510_CC36FC20-0DCE-7408-77C72CD93ED4A476-cc36f9e70fc9b45_cc36fc73-07dd-b6b3-09b619cd4694393e.jpg',
-    address: '20 W 34th St., New York, NY 10001, United States',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9856644,
-    },
-    creator: 'u1',
-  },
-  {
-    id: 'p2',
-    title: 'Empisfsfsfsfs',
-    description: 'One of the most famous sky scrapers in the world',
-    imageUrl:
-      'https://images.pexels.com/photos/2404949/pexels-photo-2404949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    address: '20 W 34th St., New York, NY 10001, United States',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u2',
-  },
-];
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { useState } from 'react';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 
 function UserPlaces() {
   const userId = useParams().userId;
-  const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlaces, setLoadedPlaces] = useState();
 
-  return <PlaceList items={loadedPlaces} />;
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await sendRequest(
+          `http://localhost:5000/api/places/user/${userId}`
+        );
+        setLoadedPlaces(response.places);
+        // eslint-disable-next-line no-empty, no-unused-vars
+      } catch (error) {}
+    })();
+  }, [sendRequest, userId]);
+
+  return (
+    <>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    </>
+  );
 }
 
 export default UserPlaces;
