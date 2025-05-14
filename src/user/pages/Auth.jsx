@@ -44,7 +44,7 @@ function Auth() {
           password: formState.inputs.password.value,
         }),
         { 'Content-Type': 'application/json' }
-      ).then(() => auth.login());
+      ).then((response) => auth.login(response.user.id));
     } else {
       await sendRequest(
         'http://localhost:5000/api/users/signup',
@@ -55,7 +55,7 @@ function Auth() {
           password: formState.inputs.password.value,
         }),
         { 'Content-Type': 'application/json' }
-      ).then(() => auth.login());
+      ).then((response) => auth.login(response.user.id));
     }
   };
 
