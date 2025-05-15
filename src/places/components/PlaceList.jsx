@@ -5,7 +5,7 @@ import PlaceItem from './PlaceItem';
 import Button from '../../shared/components/FormElements/Button';
 
 function PlaceList(props) {
-  if (props.items.length === 0) {
+  if (!props.items) {
     return (
       <div className="place-list center">
         <Card className="padding">
