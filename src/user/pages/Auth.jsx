@@ -118,8 +118,8 @@ function Auth() {
             label="Password"
             element="input"
             onInput={inputHandler}
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please input a valid password, at least 5 characters"
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText="Please input a valid password, at least 6 characters"
           />
           <Button type="submit" disabled={!formState.isValid}>
             {isLoginMode ? 'LOGIN' : 'SIGN UP'}
