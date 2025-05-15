@@ -38,7 +38,6 @@ function NewPlace() {
 
   const placeSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs); //send this to backend
 
     try {
       await sendRequest(
