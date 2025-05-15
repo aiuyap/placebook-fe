@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { useState } from 'react';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 function UserPlaces() {
   const userId = useParams().userId;
